@@ -9,11 +9,13 @@
 </head>
 <body>
   <h2>My Vega-Lite Map</h2>
-  vegaEmbed("#vis", "visualization.vl.json");
+  <div id="vis"></div>
 
-
-  <script>
-    vegaEmbed("#vis", "visualization.vl.json");
+  <script type="text/javascript">
+    vegaEmbed("#vis", "visualization.vl.json").then(function(result) {
+      // 成功渲染
+    }).catch(console.error);
   </script>
 </body>
 </html>
+
