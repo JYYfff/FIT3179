@@ -1,0 +1,12 @@
+[
+  {"burn_count": "0", "fire_type": "none", "frequency": 13330},
+  {"burn_count": "1", "fire_type": "none", "frequency": 34212},
+  {"burn_count": "1", "fire_type": "planned", "frequency": 3799},
+  {"burn_count": "1", "fire_type": "unplanned", "frequency": 4754},
+  {"burn_count": "2", "fire_type": "none", "frequency": 27798},
+  {"burn_count": "2", "fire_type": "planned", "frequency": 4856},
+  {"burn_count": "2", "fire_type": "unplanned", "frequency": 5235},
+  {"burn_count": "3", "fire_type": "none", "frequency": 20065},
+  {"burn_count": "3", "fire_type": "planned", "frequency": 5188},
+  {"burn_count": "3", "fire_type": "unplanned", "frequency": 4929}
+]

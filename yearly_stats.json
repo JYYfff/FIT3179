@@ -1,0 +1,17 @@
+[
+  {"year": "2016-17", "fire_type": "none", "fire_count": 21138},
+  {"year": "2016-17", "fire_type": "planned", "fire_count": 8448},
+  {"year": "2016-17", "fire_type": "unplanned", "fire_count": 8869},
+  {"year": "2017-18", "fire_type": "none", "fire_count": 20943},
+  {"year": "2017-18", "fire_type": "planned", "fire_count": 9127},
+  {"year": "2017-18", "fire_type": "unplanned", "fire_count": 8385},
+  {"year": "2018-19", "fire_type": "none", "fire_count": 20811},
+  {"year": "2018-19", "fire_type": "planned", "fire_count": 8844},
+  {"year": "2018-19", "fire_type": "unplanned", "fire_count": 9290},
+  {"year": "2019-20", "fire_type": "none", "fire_count": 20788},
+  {"year": "2019-20", "fire_type": "planned", "fire_count": 8625},
+  {"year": "2019-20", "fire_type": "unplanned", "fire_count": 9042},
+  {"year": "2020-21", "fire_type": "none", "fire_count": 20951},
+  {"year": "2020-21", "fire_type": "planned", "fire_count": 8876},
+  {"year": "2020-21", "fire_type": "unplanned", "fire_count": 9629}
+]

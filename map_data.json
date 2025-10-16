@@ -1,0 +1,10 @@
+[
+  {"id": 0, "STATE_NAME": "New South Wales", "fires": 1250, "area": 450000, "pct": 0.15},
+  {"id": 1, "STATE_NAME": "Victoria", "fires": 890, "area": 320000, "pct": 0.12},
+  {"id": 2, "STATE_NAME": "Queensland", "fires": 2100, "area": 680000, "pct": 0.25},
+  {"id": 3, "STATE_NAME": "South Australia", "fires": 420, "area": 180000, "pct": 0.08},
+  {"id": 4, "STATE_NAME": "Western Australia", "fires": 1650, "area": 520000, "pct": 0.20},
+  {"id": 5, "STATE_NAME": "Tasmania", "fires": 180, "area": 85000, "pct": 0.05},
+  {"id": 6, "STATE_NAME": "Northern Territory", "fires": 320, "area": 150000, "pct": 0.10},
+  {"id": 7, "STATE_NAME": "Australian Capital Territory", "fires": 45, "area": 12000, "pct": 0.05}
+]

@@ -1,175 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FIT3179 – Interactive Visualisation</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-  <style>
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; background:#f7fbff; }
-    h1 { margin: 0 0 8px; font-size: 22px; }
-    p.hint { margin: 6px 0 18px; color:#334155; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-    .card { background: #ffffff; border-radius: 14px; box-shadow: 0 6px 18px rgba(2,12,27,0.06); padding: 18px; }
-    .card h2 { margin: 0 0 10px; font-size: 18px; }
-    .note { font-size: 12px; color:#475569; margin-top: 6px; }
-    .controls { display:flex; flex-wrap:wrap; gap:12px; margin:10px 0 0; }
-    label { font-size: 13px; color:#334155; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Australian Forest Fire Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        /* Australian Forest Fire Data Visualization - Styles */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .main {
+            padding: 2rem;
+        }
+
+        .chart-section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+        }
+
+        .chart-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .chart-explanation {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .chart-explanation h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .chart-explanation p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .chart-explanation strong {
+            color: #2c3e50;
+        }
+
+        .chart-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            margin: 1.5rem 0;
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 1rem;
+            border: 1px solid #e1e8ed;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .chart-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vega-embed {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-  <h1>FIT3179 Week 10 – Interactive Visualisation</h1>
-  <p class="hint">This page contains two Vega-Lite visualisations: your Week 9 map (baseline) and the enhanced Week 10 interactive map (with tooltip, annotation, and filtering).</p>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔥 Australian Forest Fire Data Visualization</h1>
+            <p class="subtitle">Interactive Data Analysis of Forest Fires Across Australian States (2016-2021)</p>
+        </div>
 
-  <div class="grid">
-    <div class="card">
-      <h2>Original Map (Week 9)</h2>
-      <div id="vis-original"></div>
-      <div class="note">Baseline proportional symbol map of Australian capital cities and their populations.</div>
+        <!-- Main Content -->
+        <div class="main">
+            
+            <!-- Map Visualization -->
+            <section class="chart-section">
+                <div class="chart-wrapper">
+                    <div class="chart-container">
+                        <h2>🗺️ Forest Fire Distribution Map</h2>
+                        <div id="australia-map"></div>
+                    </div>
+                    <div class="chart-explanation">
+                        <h3>Map Explanation</h3>
+                        <p><strong>What it shows:</strong> Geographic distribution of forest fires across Australian states and territories.</p>
+                        <p><strong>Color intensity:</strong> Indicates fire intensity percentage (yellow = lower intensity, red = higher intensity)</p>
+                        <p><strong>Features:</strong> 
+                            - Interactive tooltips with detailed information<br>
+                            - Shows actual state boundaries<br>
+                            - Data aggregated by state/territory
+                        </p>
+                        <p><strong>Why it matters:</strong> Helps identify fire-prone regions and understand the spatial patterns of forest fires across Australia's diverse landscape.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Annual Trends -->
+            <section class="chart-section">
+                <div class="chart-wrapper">
+                    <div class="chart-container">
+                        <h2>📈 Annual Fire Trends</h2>
+                        <div id="yearly-trend"></div>
+                    </div>
+                    <div class="chart-explanation">
+                        <h3>Trend Analysis</h3>
+                        <p><strong>What it shows:</strong> Number of fires by year and type (2016-2021 financial years)</p>
+                        <p><strong>Lines:</strong> Each line represents a different fire type</p>
+                        <p><strong>Key insights:</strong> 
+                            - Shows seasonal variations in fire occurrence<br>
+                            - Compares planned vs unplanned fire frequencies<br>
+                            - Reveals any long-term trends in fire management
+                        </p>
+                        <p><strong>Why it matters:</strong> Understanding temporal patterns helps in fire season preparation and resource allocation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- State Comparison -->
+            <section class="chart-section">
+                <div class="chart-wrapper">
+                    <div class="chart-container">
+                        <h2>🏛️ State-by-State Fire Comparison</h2>
+                        <div id="state-comparison"></div>
+                    </div>
+                    <div class="chart-explanation">
+                        <h3>Regional Analysis</h3>
+                        <p><strong>What it shows:</strong> Total area burned by state/territory and fire type</p>
+                        <p><strong>Bars:</strong> Height represents total hectares burned</p>
+                        <p><strong>Colors:</strong> Different fire types within each state</p>
+                        <p><strong>Key insights:</strong>
+                            - NSW and Victoria show highest fire activity<br>
+                            - Planned burns are more common in some states<br>
+                            - Regional differences in fire management approaches
+                        </p>
+                        <p><strong>Why it matters:</strong> Helps identify which regions need more fire management resources and different strategies.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Burn Distribution -->
+            <section class="chart-section">
+                <div class="chart-wrapper">
+                    <div class="chart-container">
+                        <h2>🔥 Burn Frequency Distribution</h2>
+                        <div id="burn-distribution"></div>
+                    </div>
+                    <div class="chart-explanation">
+                        <h3>Frequency Analysis</h3>
+                        <p><strong>What it shows:</strong> How many times forest areas were burned during the period</p>
+                        <p><strong>X-axis:</strong> Number of times an area was burned</p>
+                        <p><strong>Y-axis:</strong> Frequency or count of such areas</p>
+                        <p><strong>Key insights:</strong>
+                            - Most areas experience only 1-2 burns<br>
+                            - Repeated burning can indicate high-risk zones<br>
+                            - Helps identify areas needing prevention focus
+                        </p>
+                        <p><strong>Why it matters:</strong> Understanding burn frequency helps target fire prevention and forest health management efforts.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tenure Analysis -->
+            <section class="chart-section">
+                <div class="chart-wrapper">
+                    <div class="chart-container">
+                        <h2>🌳 Forest Tenure Analysis</h2>
+                        <div id="tenure-analysis"></div>
+                    </div>
+                    <div class="chart-explanation">
+                        <h3>Land Type Analysis</h3>
+                        <p><strong>What it shows:</strong> Distribution of fires across different land tenure types</p>
+                        <p><strong>Segments:</strong> Each pie segment represents a tenure type</p>
+                        <p><strong>Tenure types:</strong>
+                            - NPW: National Parks and Wildlife<br>
+                            - SF: State Forests<br>
+                            - LEASE: Leased lands<br>
+                            - MUF: Multiple Use Forests<br>
+                            - SP: Special Purposes
+                        </p>
+                        <p><strong>Why it matters:</strong> Different land tenures require different fire management strategies and responsibilities.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Australian Forest Fire Data Visualization</p>
+            <p>Data Source: Australian Forest Fire Dataset (2016-2021)</p>
+            <p>Created with Vega-Lite</p>
+        </div>
     </div>
 
-    <div class="card">
-      <h2>Enhanced Interactive Map (Week 10)</h2>
-      <div id="vis-interactive"></div>
-      <div class="note">Includes: Tooltip ✔︎, Text Annotation ✔︎, Filtering (state dropdown & population slider) ✔︎.</div>
-    </div>
-  </div>
+    <script>
+        // All Vega-Lite specifications embedded directly
+        
+        // Map specification with data from JSON files
+        const mapSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 600,
+            "height": 400,
+            "title": "Australian Forest Fire Distribution by State",
+            "data": {
+                "url": "data/map_data.json"
+            },
+            "transform": [
+                {
+                    "lookup": "id",
+                    "from": {
+                        "data": {
+                            "url": "data/australian-states.json",
+                            "format": {
+                                "type": "json",
+                                "property": "features"
+                            }
+                        },
+                        "key": "id"
+                    },
+                    "as": "geo"
+                }
+            ],
+            "projection": {
+                "type": "mercator"
+            },
+            "mark": "geoshape",
+            "encoding": {
+                "shape": {
+                    "field": "geo",
+                    "type": "geojson"
+                },
+                "color": {
+                    "field": "pct",
+                    "type": "quantitative",
+                    "scale": {
+                        "range": ["#ffeb3b", "#ff9800", "#f44336"]
+                    },
+                    "title": "Fire Intensity (%)"
+                },
+                "tooltip": [
+                    {"field": "STATE_NAME", "type": "nominal", "title": "State/Territory"},
+                    {"field": "fires", "type": "quantitative", "format": ",.0f", "title": "Total Fires"},
+                    {"field": "area", "type": "quantitative", "format": ",.0f", "title": "Area Burned (hectares)"},
+                    {"field": "pct", "type": "quantitative", "format": ".1%", "title": "Fire Intensity"}
+                ]
+            }
+        };
 
-  <script>
-    const baseSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": 800,
-      "height": 520,
-      "background": "#eaf6ff",
-      "config": {"view": {"stroke": null}},
-      "projection": {"type": "equalEarth", "center": [133, -28], "scale": 850},
-      "layer": [
-        {"data": {"graticule": true}, "mark": {"type": "geoshape", "stroke": "#c4d7e6", "strokeWidth": 0.5, "filled": false}},
-        {"data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@2.12.1/data/world-110m.json", "format": {"type": "topojson", "feature": "countries"}}, "mark": {"type": "geoshape", "fill": "#f9fbff", "stroke": "#b7c5d6", "strokeWidth": 0.6}},
-        {
-          "data": {"values": [
-            {"city": "Sydney", "state": "NSW", "lat": -33.8688, "lon": 151.2093, "pop_millions": 5.3},
-            {"city": "Melbourne", "state": "VIC", "lat": -37.8136, "lon": 144.9631, "pop_millions": 5.2},
-            {"city": "Brisbane", "state": "QLD", "lat": -27.4698, "lon": 153.0251, "pop_millions": 2.7},
-            {"city": "Perth", "state": "WA", "lat": -31.9523, "lon": 115.8613, "pop_millions": 2.2},
-            {"city": "Adelaide", "state": "SA", "lat": -34.9285, "lon": 138.6007, "pop_millions": 1.4},
-            {"city": "Canberra", "state": "ACT", "lat": -35.2809, "lon": 149.13, "pop_millions": 0.47},
-            {"city": "Hobart", "state": "TAS", "lat": -42.8821, "lon": 147.3272, "pop_millions": 0.24},
-            {"city": "Darwin", "state": "NT", "lat": -12.4634, "lon": 130.8456, "pop_millions": 0.15}
-          ]},
-          "mark": {"type": "circle", "tooltip": true, "opacity": 0.9},
-          "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
-            "size": {"field": "pop_millions", "type": "quantitative", "title": "Population (millions)", "scale": {"range": [50, 2200]}},
-            "color": {"field": "pop_millions", "type": "quantitative", "title": "Population (millions)"},
-            "tooltip": [
-              {"field": "city", "title": "City"},
-              {"field": "state", "title": "State/Territory"},
-              {"field": "pop_millions", "title": "Population (M)", "format": ".2f"}
-            ]
-          }
-        },
-        {
-          "data": {"values": [
-            {"city": "Sydney", "state": "NSW", "lat": -33.8688, "lon": 151.2093, "pop_millions": 5.3},
-            {"city": "Melbourne", "state": "VIC", "lat": -37.8136, "lon": 144.9631, "pop_millions": 5.2},
-            {"city": "Brisbane", "state": "QLD", "lat": -27.4698, "lon": 153.0251, "pop_millions": 2.7},
-            {"city": "Perth", "state": "WA", "lat": -31.9523, "lon": 115.8613, "pop_millions": 2.2},
-            {"city": "Adelaide", "state": "SA", "lat": -34.9285, "lon": 138.6007, "pop_millions": 1.4},
-            {"city": "Canberra", "state": "ACT", "lat": -35.2809, "lon": 149.13, "pop_millions": 0.47},
-            {"city": "Hobart", "state": "TAS", "lat": -42.8821, "lon": 147.3272, "pop_millions": 0.24},
-            {"city": "Darwin", "state": "NT", "lat": -12.4634, "lon": 130.8456, "pop_millions": 0.15}
-          ]},
-          "mark": {"type": "text", "dy": -10, "fontSize": 11},
-          "encoding": {"longitude": {"field": "lon", "type": "quantitative"}, "latitude": {"field": "lat", "type": "quantitative"}, "text": {"field": "city"}, "color": {"value": "#1f2937"}}
-        }
-      ],
-      "title": {"text": "Australian Capital Cities by Estimated Population (Demo Data)", "anchor": "start", "fontSize": 16}
-    };
+        // Yearly trend specification with data from JSON file
+        const yearlyTrendSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Australian Forest Fire Annual Trends (2016-2021)",
+            "width": 600,
+            "height": 300,
+            "data": {
+                "url": "data/yearly_stats.json"
+            },
+            "mark": {"type": "line", "point": true},
+            "encoding": {
+                "x": {"field": "year", "type": "ordinal", "title": "Fiscal Year"},
+                "y": {"field": "fire_count", "type": "quantitative", "title": "Fire Count"},
+                "color": {
+                    "field": "fire_type",
+                    "type": "nominal",
+                    "title": "Fire Type",
+                    "scale": {
+                        "domain": ["planned", "unplanned", "none"],
+                        "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
+                    }
+                }
+            }
+        };
 
-    // ORIGINAL (Week 9)
-    const specOriginal = baseSpec;
+        // State comparison specification with data from JSON file
+        const stateComparisonSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Forest Fire Area Comparison by State/Territory",
+            "width": 600,
+            "height": 400,
+            "data": {
+                "url": "data/state_stats.json"
+            },
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "state", "type": "nominal", "title": "State/Territory"},
+                "y": {"field": "total_area_hectares", "type": "quantitative", "title": "Burned Area (hectares)"},
+                "color": {
+                    "field": "fire_type",
+                    "type": "nominal",
+                    "title": "Fire Type",
+                    "scale": {
+                        "domain": ["planned", "unplanned", "none"],
+                        "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
+                    }
+                }
+            }
+        };
 
-    // ENHANCED (Week 10): add params (dropdown + slider), filters, and an annotation layer for the top city.
-    const specInteractive = JSON.parse(JSON.stringify(baseSpec));
+        // Burn distribution specification with data from JSON file
+        const burnDistributionSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Forest Burn Frequency Distribution",
+            "width": 600,
+            "height": 300,
+            "data": {
+                "url": "data/burn_distribution.json"
+            },
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "burn_count", "type": "ordinal", "title": "Burn Count"},
+                "y": {"field": "frequency", "type": "quantitative", "title": "Frequency"},
+                "color": {
+                    "field": "fire_type",
+                    "type": "nominal",
+                    "title": "Fire Type",
+                    "scale": {
+                        "domain": ["planned", "unplanned", "none"],
+                        "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
+                    }
+                }
+            }
+        };
 
-    // Add parameters for filtering
-    specInteractive.params = [
-      {
-        name: "stateSel",
-        value: "All",
-        bind: { input: "select", options: ["All","ACT","NSW","NT","QLD","SA","TAS","VIC","WA"], labels: ["All","ACT","NSW","NT","QLD","SA","TAS","VIC","WA"] }
-      },
-      {
-        name: "minPop",
-        value: 0.0,
-        bind: { input: "range", min: 0, max: 6, step: 0.1 }
-      }
-    ];
+        // Tenure analysis specification with data from JSON file
+        const tenureAnalysisSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Forest Fire Distribution by Land Tenure Type",
+            "width": 400,
+            "height": 400,
+            "data": {
+                "url": "data/tenure_stats.json"
+            },
+            "mark": "arc",
+            "encoding": {
+                "theta": {"field": "total_area", "type": "quantitative"},
+                "color": {
+                    "field": "tenure",
+                    "type": "nominal",
+                    "title": "Tenure Type"
+                },
+                "tooltip": [
+                    {"field": "tenure", "type": "nominal", "title": "Tenure Type"},
+                    {"field": "fire_type", "type": "nominal", "title": "Fire Type"},
+                    {"field": "total_area", "type": "quantitative", "title": "Total Area (hectares)", "format": ",.0f"}
+                ]
+            }
+        };
 
-    // Inject transform filters to the circle layer (index 2 in the layers array)
-    specInteractive.layer[2].transform = [
-      { filter: "(stateSel === 'All') || (datum.state === stateSel)" },
-      { filter: "datum.pop_millions >= minPop" }
-    ];
-
-    // Add a bold stroke to selected points (optional aesthetic)
-    specInteractive.layer[2].mark.stroke = "#0f172a";
-    specInteractive.layer[2].mark.strokeWidth = 0.6;
-
-    // Add an annotation layer: highlight the top city by population with a label
-    const annotationLayer = {
-      data: { values: baseSpec.layer[2].data.values },
-      transform: [
-        { window: [{ op: "rank", as: "r" }], sort: [{ field: "pop_millions", order: "descending" }] },
-        { filter: "datum.r === 1" }
-      ],
-      layer: [
-        {
-          mark: { type: "circle", stroke: "#111827", strokeWidth: 1.2, fill: "#fff", size: 400 },
-          encoding: {
-            longitude: { field: "lon", type: "quantitative" },
-            latitude: { field: "lat", type: "quantitative" }
-          }
-        },
-        {
-          mark: { type: "text", dy: -18, fontSize: 12, fontWeight: "bold", background: "#ffffff" },
-          encoding: {
-            longitude: { field: "lon", type: "quantitative" },
-            latitude: { field: "lat", type: "quantitative" },
-            text: { field: "city", type: "nominal" }
-          }
-        },
-        {
-          mark: { type: "text", dy: -34, fontSize: 11 },
-          encoding: {
-            longitude: { field: "lon", type: "quantitative" },
-            latitude: { field: "lat", type: "quantitative" },
-            text: { value: "Highest population" },
-            color: { value: "#1f2937" }
-          }
-        }
-      ]
-    };
-
-    specInteractive.layer.push(annotationLayer);
-
-    // Update title with interaction hints
-    specInteractive.title = {
-      text: "Australian Capital Cities – Interactive (Filter & Annotation)",
-      subtitle: [
-        "Use the dropdown to filter by state and the slider to set minimum population (millions)."
-      ],
-      anchor: "start",
-      fontSize: 16
-    };
-
-    vegaEmbed('#vis-original', specOriginal, { actions: false });
-    vegaEmbed('#vis-interactive', specInteractive, { actions: false });
-  </script>
+        // Embed all charts
+        vegaEmbed('#australia-map', mapSpec);
+        vegaEmbed('#yearly-trend', yearlyTrendSpec);
+        vegaEmbed('#state-comparison', stateComparisonSpec);
+        vegaEmbed('#burn-distribution', burnDistributionSpec);
+        vegaEmbed('#tenure-analysis', tenureAnalysisSpec);
+    </script>
 </body>
 </html>
-

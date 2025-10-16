@@ -1,0 +1,17 @@
+[
+  {"tenure": "LEASE", "fire_type": "none", "total_area": 211923289},
+  {"tenure": "LEASE", "fire_type": "planned", "total_area": 8341835},
+  {"tenure": "LEASE", "fire_type": "unplanned", "total_area": 19516491},
+  {"tenure": "MUF", "fire_type": "none", "total_area": 50112725},
+  {"tenure": "MUF", "fire_type": "planned", "total_area": 872304},
+  {"tenure": "MUF", "fire_type": "unplanned", "total_area": 1819476},
+  {"tenure": "NPW", "fire_type": "none", "total_area": 377858669},
+  {"tenure": "NPW", "fire_type": "planned", "total_area": 9848119},
+  {"tenure": "NPW", "fire_type": "unplanned", "total_area": 8834691},
+  {"tenure": "SF", "fire_type": "none", "total_area": 144802353},
+  {"tenure": "SF", "fire_type": "planned", "total_area": 6566473},
+  {"tenure": "SF", "fire_type": "unplanned", "total_area": 2939693},
+  {"tenure": "SP", "fire_type": "none", "total_area": 106933988},
+  {"tenure": "SP", "fire_type": "planned", "total_area": 5698806},
+  {"tenure": "SP", "fire_type": "unplanned", "total_area": 3262046}
+]

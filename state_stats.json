@@ -1,0 +1,23 @@
+[
+  {"state": "NSW", "fire_type": "none", "total_area_hectares": 394285747},
+  {"state": "NSW", "fire_type": "planned", "total_area_hectares": 329687},
+  {"state": "NSW", "fire_type": "unplanned", "total_area_hectares": 6037346},
+  {"state": "Vic", "fire_type": "none", "total_area_hectares": 156628014},
+  {"state": "Vic", "fire_type": "planned", "total_area_hectares": 3169095},
+  {"state": "Vic", "fire_type": "unplanned", "total_area_hectares": 918581},
+  {"state": "Qld", "fire_type": "none", "total_area_hectares": 1318823945},
+  {"state": "Qld", "fire_type": "planned", "total_area_hectares": 32089867},
+  {"state": "Qld", "fire_type": "unplanned", "total_area_hectares": 20438798},
+  {"state": "WA", "fire_type": "none", "total_area_hectares": 1432466773},
+  {"state": "WA", "fire_type": "planned", "total_area_hectares": 11532803},
+  {"state": "WA", "fire_type": "unplanned", "total_area_hectares": 27831759},
+  {"state": "SA", "fire_type": "none", "total_area_hectares": 48628849},
+  {"state": "SA", "fire_type": "planned", "total_area_hectares": 5009947},
+  {"state": "SA", "fire_type": "unplanned", "total_area_hectares": 12993635},
+  {"state": "Tas", "fire_type": "none", "total_area_hectares": 50438699},
+  {"state": "Tas", "fire_type": "planned", "total_area_hectares": 4568175},
+  {"state": "Tas", "fire_type": "unplanned", "total_area_hectares": 2689431},
+  {"state": "NT", "fire_type": "none", "total_area_hectares": 1051395434},
+  {"state": "NT", "fire_type": "planned", "total_area_hectares": 8277758},
+  {"state": "NT", "fire_type": "unplanned", "total_area_hectares": 8142025}
+]
