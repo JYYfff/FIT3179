@@ -67,10 +67,15 @@
         .chart-wrapper {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: start;
         }
-
+        .map-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
         .chart-explanation {
             background: #f8f9fa;
             padding: 1.5rem;
@@ -151,7 +156,7 @@
             
             <!-- Map Visualization -->
             <section class="chart-section">
-                <div class="chart-wrapper">
+                <div class="chart-wrapper map-layout">
                     <div class="chart-container">
                         <h2>🗺️ Forest Fire Distribution Map</h2>
                         <div id="australia-map"></div>
@@ -172,7 +177,7 @@
 
             <!-- Annual Trends -->
             <section class="chart-section">
-                <div class="chart-wrapper">
+                <div class="chart-wrapper map-layout">
                     <div class="chart-container">
                         <h2>📈 Annual Fire Trends</h2>
                         <div id="yearly-trend"></div>
@@ -193,7 +198,7 @@
 
             <!-- State Comparison -->
             <section class="chart-section">
-                <div class="chart-wrapper">
+                <div class="chart-wrapper map-layout">
                     <div class="chart-container">
                         <h2>🏛️ State-by-State Fire Comparison</h2>
                         <div id="state-comparison"></div>
@@ -215,7 +220,7 @@
 
             <!-- Burn Distribution -->
             <section class="chart-section">
-                <div class="chart-wrapper">
+                <div class="chart-wrapper map-layout">
                     <div class="chart-container">
                         <h2>🔥 Burn Frequency Distribution</h2>
                         <div id="burn-distribution"></div>
