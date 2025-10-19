@@ -282,6 +282,7 @@
             "width": 600,
             "height": 400,
             "title": "Australian Forest Fire Distribution by State",
+            "subtitle": "Fire Intensity (%) = Burned area ÷ Total forest area per state (2016–2021)"
             "data": {
                 "url": "FIT3179/map_data.json"
             },
@@ -316,7 +317,8 @@
                     "scale": {
                         "range": ["#ffeb3b", "#ff9800", "#f44336"]
                     },
-                    "title": "Fire Intensity (%)"
+                    "title": "Fire Intensity (%)",
+                    "legend": { "format": ".0%" }
                 },
                 "tooltip": [
                     {"field": "STATE_NAME", "type": "nominal", "title": "State/Territory"},
@@ -345,11 +347,19 @@
                     "type": "nominal",
                     "title": "Fire Type",
                     "scale": {
-                        "domain": ["planned", "unplanned", "none"],
+                        "domain": ["planned", "unplanned", "Unclassified / Not recorded"],
                         "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
                     }
                 }
             }
+        },
+        {
+         "mark": {"type": "text", "dy": -8, "fontSize": 10},
+        "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "fire_count", "type": "quantitative"},
+        "color": {"field": "fire_type", "type": "nominal", "legend": null},
+        "text": {"field": "fire_count", "type": "quantitative", "format": "~s"}
         };
 
         // State comparison specification with data from JSON file
@@ -395,7 +405,7 @@
                     "type": "nominal",
                     "title": "Fire Type",
                     "scale": {
-                        "domain": ["planned", "unplanned", "none"],
+                        "domain": ["planned", "unplanned", "Unclassified / Not recorded"],
                         "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
                     }
                 }
@@ -425,7 +435,14 @@
                     {"field": "total_area", "type": "quantitative", "title": "Total Area (hectares)", "format": ",.0f"}
                 ]
             }
-        };
+        },
+        {
+      "mark": {"type": "text", "radius": 180, "fontSize": 11, "color": "white"},
+      "encoding": {
+        "theta": {"field": "total_area", "type": "quantitative"},
+        "text": {"field": "total_area", "type": "quantitative", "format": "~s"}
+        }
+    };
 
         // Embed all charts
         vegaEmbed('#australia-map', mapSpec);
