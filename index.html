@@ -278,55 +278,65 @@
         
         // Map specification with data from JSON files
         const mapSpec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "width": 600,
-        "height": 400,
-        "title": "Australian Forest Fire Distribution by State",
-        "subtitle": "Fire Intensity (%) = Burned area ÷ Total forest area per state (2016–2021)",
-        "data": {
-            "url": "FIT3179/map_data.json"
-        },
-        "transform": [
-            {
-                "lookup": "id",
-                "from": {
-                    "data": {
-                        "url": "FIT3179/australian-states.json",
-                        "format": {"type": "json", "property": "features"}
-                    },
-                    "key": "id"
-                },
-                "as": "geo"
-            }
-        ],
-        "projection": {"type": "mercator"},
-        "mark": "geoshape",
-        "encoding": {
-            "shape": {"field": "geo", "type": "geojson"},
-            "color": {
-                "field": "pct",
-                "type": "quantitative",
-                "scale": {"range": ["#ffeb3b", "#ff9800", "#f44336"]},
-                "title": "Fire Intensity (%)",
-                "legend": {"format": ".0%"}
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 600,
+            "height": 400,
+            "title": "Australian Forest Fire Distribution by State",
+            "data": {
+                "url": "FIT3179/map_data.json"
             },
-            "tooltip": [
-                {"field": "STATE_NAME", "type": "nominal", "title": "State/Territory"},
-                {"field": "fires", "type": "quantitative", "format": ",.0f", "title": "Total Fires"},
-                {"field": "area", "type": "quantitative", "format": ",.0f", "title": "Area Burned (hectares)"},
-                {"field": "pct", "type": "quantitative", "format": ".1%", "title": "Fire Intensity"}
-            ]
-        }
-    };
+            "transform": [
+                {
+                    "lookup": "id",
+                    "from": {
+                        "data": {
+                            "url": "FIT3179/australian-states.json",
+                            "format": {
+                                "type": "json",
+                                "property": "features"
+                            }
+                        },
+                        "key": "id"
+                    },
+                    "as": "geo"
+                }
+            ],
+            "projection": {
+                "type": "mercator"
+            },
+            "mark": "geoshape",
+            "encoding": {
+                "shape": {
+                    "field": "geo",
+                    "type": "geojson"
+                },
+                "color": {
+                    "field": "pct",
+                    "type": "quantitative",
+                    "scale": {
+                        "range": ["#ffeb3b", "#ff9800", "#f44336"]
+                    },
+                    "title": "Fire Intensity (%)"
+                },
+                "tooltip": [
+                    {"field": "STATE_NAME", "type": "nominal", "title": "State/Territory"},
+                    {"field": "fires", "type": "quantitative", "format": ",.0f", "title": "Total Fires"},
+                    {"field": "area", "type": "quantitative", "format": ",.0f", "title": "Area Burned (hectares)"},
+                    {"field": "pct", "type": "quantitative", "format": ".1%", "title": "Fire Intensity"}
+                ]
+            }
+        };
 
-    // --- Yearly Trend (with annotations) ---
-    const yearlyTrendSpec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "title": "Australian Forest Fire Annual Trends (2016–2021)",
-        "width": 600,
-        "height": 300,
-        "data": {"url": "FIT3179/yearly_stats.json"},
-        "layer": [
+        // Yearly trend specification with data from JSON file
+        const yearlyTrendSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Australian Forest Fire Annual Trends (2016-2021)",
+            "width": 600,
+            "height": 300,
+            "data": {
+                "url": "FIT3179/yearly_stats.json"
+            },
+            "layer": [
             {
                 "mark": {"type": "line", "point": true},
                 "encoding": {
@@ -344,7 +354,7 @@
                 }
             },
             {
-                "mark": {"type": "text", "dy": -8, "fontSize": 10},
+                "mark": {"type": "text", "dy": -12, "fontSize": 10},
                 "encoding": {
                     "x": {"field": "year", "type": "ordinal"},
                     "y": {"field": "fire_count", "type": "quantitative"},
@@ -355,81 +365,91 @@
         ]
     };
 
-    // --- State Comparison ---
-    const stateComparisonSpec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "title": "Forest Fire Area Comparison by State/Territory",
-        "width": 600,
-        "height": 400,
-        "data": {"url": "FIT3179/state_stats.json"},
-        "mark": "bar",
-        "encoding": {
-            "x": {"field": "state", "type": "nominal", "title": "State/Territory"},
-            "y": {"field": "total_area_hectares", "type": "quantitative", "title": "Burned Area (hectares)"},
-            "color": {
-                "field": "fire_type",
-                "type": "nominal",
-                "title": "Fire Type",
-                "scale": {
-                    "domain": ["planned", "unplanned", "none"],
-                    "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
-                }
-            }
-        }
-    };
-
-    // --- Burn Distribution ---
-    const burnDistributionSpec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "title": "Forest Burn Frequency Distribution",
-        "width": 600,
-        "height": 300,
-        "data": {"url": "FIT3179/burn_distribution.json"},
-        "mark": "bar",
-        "encoding": {
-            "x": {"field": "burn_count", "type": "ordinal", "title": "Burn Count"},
-            "y": {"field": "frequency", "type": "quantitative", "title": "Frequency"},
-            "color": {
-                "field": "fire_type",
-                "type": "nominal",
-                "title": "Fire Type",
-                "scale": {
-                    "domain": ["planned", "unplanned", "Unclassified / Not recorded"],
-                    "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
-                }
-            }
-        }
-    };
-
-    // --- Tenure Pie (with labels) ---
-    const tenureAnalysisSpec = {
-        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "title": "Forest Fire Distribution by Land Tenure Type",
-        "width": 400,
-        "height": 400,
-        "data": {"url": "FIT3179/tenure_stats.json"},
-        "layer": [
-            {
-                "mark": {"type": "arc", "outerRadius": 180},
-                "encoding": {
-                    "theta": {"field": "total_area", "type": "quantitative"},
-                    "color": {"field": "tenure", "type": "nominal", "title": "Tenure Type"},
-                    "tooltip": [
-                        {"field": "tenure", "type": "nominal", "title": "Tenure Type"},
-                        {"field": "fire_type", "type": "nominal", "title": "Fire Type"},
-                        {"field": "total_area", "type": "quantitative", "title": "Total Area (ha)", "format": ",.0f"}
-                    ]
-                }
+        // State comparison specification with data from JSON file
+        const stateComparisonSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Forest Fire Area Comparison by State/Territory",
+            "width": 600,
+            "height": 400,
+            "data": {
+                "url": "FIT3179/state_stats.json"
             },
-            {
-                "mark": {"type": "text", "radius": 190, "fontSize": 11, "color": "white"},
-                "encoding": {
-                    "theta": {"field": "total_area", "type": "quantitative"},
-                    "text": {"field": "total_area", "type": "quantitative", "format": "~s"}
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "state", "type": "nominal", "title": "State/Territory"},
+                "y": {"field": "total_area_hectares", "type": "quantitative", "title": "Burned Area (hectares)"},
+                "color": {
+                    "field": "fire_type",
+                    "type": "nominal",
+                    "title": "Fire Type",
+                    "scale": {
+                        "domain": ["planned", "unplanned", "Unclassified / Not recorded"],
+                        "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
+                    }
                 }
             }
-        ]
-    };
+        };
+
+        // Burn distribution specification with data from JSON file
+        const burnDistributionSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Forest Burn Frequency Distribution",
+            "width": 600,
+            "height": 300,
+            "data": {
+                "url": "FIT3179/burn_distribution.json"
+            },
+            "mark": "bar",
+            "encoding": {
+                "x": {"field": "burn_count", "type": "ordinal", "title": "Burn Count"},
+                "y": {"field": "frequency", "type": "quantitative", "title": "Frequency"},
+                "color": {
+                    "field": "fire_type",
+                    "type": "nominal",
+                    "title": "Fire Type",
+                    "scale": {
+                        "domain": ["planned", "unplanned", "Unclassified / Not recorded"],
+                        "range": ["#2E8B57", "#DC143C", "#D3D3D3"]
+                    }
+                }
+            }
+        };
+
+        // Tenure analysis specification with data from JSON file
+        const tenureAnalysisSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "title": "Forest Fire Distribution by Land Tenure Type",
+            "width": 400,
+            "height": 400,
+            "data": {
+                "url": "FIT3179/tenure_stats.json"
+            },
+            "transform": [
+                {
+                    "calculate": "datum.tenure == 'LEASE' ? 'Leased Land' : " +
+                                "datum.tenure == 'MUF' ? 'Multiple Use Forest' : " +
+                                "datum.tenure == 'NPW' ? 'National Parks & Wildlife' : " +
+                                "datum.tenure == 'SF' ? 'State Forest' : " +
+                                "datum.tenure == 'SP' ? 'Special Purpose' : datum.tenure",
+                    "as": "tenure_full"
+                }
+            ],
+            
+            "mark": "arc",
+            "encoding": {
+                "theta": {"field": "total_area", "type": "quantitative"},
+                "color": {
+                    "field": "tenure",
+                    "type": "nominal",
+                    "title": "Tenure Type"
+                },
+                "tooltip": [
+                    {"field": "tenure", "type": "nominal", "title": "Tenure Type"},
+                    {"field": "fire_type", "type": "nominal", "title": "Fire Type"},
+                    {"field": "total_area", "type": "quantitative", "title": "Total Area (hectares)", "format": ",.0f"}
+                ]
+            }
+        };
 
         // Embed all charts
         vegaEmbed('#australia-map', mapSpec);
