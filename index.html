@@ -424,16 +424,6 @@
             "data": {
                 "url": "FIT3179/tenure_stats.json"
             },
-            "transform": [
-                {
-                    "calculate": "datum.tenure == 'LEASE' ? 'Leased Land' : " +
-                                "datum.tenure == 'MUF' ? 'Multiple Use Forest' : " +
-                                "datum.tenure == 'NPW' ? 'National Parks & Wildlife' : " +
-                                "datum.tenure == 'SF' ? 'State Forest' : " +
-                                "datum.tenure == 'SP' ? 'Special Purpose' : datum.tenure",
-                    "as": "tenure_full"
-                }
-            ],
             
             "mark": "arc",
             "encoding": {
